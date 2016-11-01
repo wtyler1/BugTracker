@@ -1,0 +1,15 @@
+﻿@model BugTracker.Models.UserRoleViewModel
+
+<h2>SelectRole</h2>
+
+@using (Html.BeginForm("SelectRole", "Admin", FormMethod.Post))
+{
+
+    @Model.user.FullName;
+    <br />
+    <br />
+    @Html.ListBox("SelectedRoles", Model.UserRoles)
+
+       
+    <button type="submit">Submit </button>
+    }

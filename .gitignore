@@ -1,0 +1,6 @@
+Web.config
+private.config
+Configuration.cs
+Startup.Auth.cs
+IdentityConfig.cs
+applicationhost.config

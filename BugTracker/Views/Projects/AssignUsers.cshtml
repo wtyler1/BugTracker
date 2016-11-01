@@ -1,0 +1,29 @@
+﻿@model BugTracker.Models.AssignViewModel
+
+@using (Html.BeginForm("AssignUsers", "Projects", FormMethod.Post))
+{
+
+    @Model.ProjectName;
+    <br />
+    <br />
+    @Html.ListBox("SelectedUsers", Model.UsersAssigned)
+
+    <button type="submit">Submit </button>
+}
+
+@using (Html.BeginForm("AssignUsersAdd", "Projects", FormMethod.Post))
+{
+
+  
+ @Html.ListBox("SelectedUsers", Model.UsersAssigned)
+
+    <button type="submit">Add </button>
+}
+@using (Html.BeginForm("AssignUsersRemove", "Projects", FormMethod.Post))
+{
+
+
+    @Html.ListBox("SelectedUsers", Model.UsersAssigned)
+
+    <button type="submit">Remove </button>
+}
