@@ -1,0 +1,13 @@
+﻿@model BugTracker.Models.ViewModelTicket
+
+<h2>AssignTicket</h2>
+@using (Html.BeginForm("AssignTicket", "Tickets", FormMethod.Post))
+{
+   
+     @Html.ListBox("SelectedUsers", Model.TicketUsersAssigned)
+
+    <button type="submit">Submit </button>
+
+}
+
+

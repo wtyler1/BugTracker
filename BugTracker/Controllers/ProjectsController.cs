@@ -16,8 +16,9 @@ namespace BugTracker
         private ApplicationDbContext db = new ApplicationDbContext();
         ProjectAssignHelper phelper = new ProjectAssignHelper();
         UserRoleHelper helper = new UserRoleHelper();
+        
         // GET: Projects
-        [Authorize]
+        [Authorize(Roles = "Admin,PM,Submitter,Developer")]
         public ActionResult Index()
 
         {
@@ -67,7 +68,7 @@ namespace BugTracker
             }
             if (model.SelectedUsers!=null)
             { 
-                    //TODO: if statement for if none are selected
+                    // if statement for if none are selected
                     foreach (var useradd in model.SelectedUsers)
                     {
                         //phelper.AddUserToProject(useradd, Convert.ToInt32(model.Id));

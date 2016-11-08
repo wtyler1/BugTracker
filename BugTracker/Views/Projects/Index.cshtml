@@ -5,10 +5,14 @@
 }
 
 <h2>Index</h2>
+@if (User.IsInRole("Admin") | User.IsInRole("PM"))
+{
+    <p>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -53,10 +57,9 @@
             @Html.ActionLink("Change Project Name ", "Edit", new { id = item.Id }, new {@class="btn btn-default btn-sm"})
                 @Html.ActionLink("Delete ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" });
             }
+            @*@Html.ActionLink("Details ", "Details", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })*@
             @if (User.IsInRole("Admin") | User.IsInRole("PM")) {
             @Html.ActionLink("Assign Project ", "AssignUsers", "Projects", new { id = item.Id }, new { @class="btn btn-info btn-sm"})
-           
-
             }
         </td>
     </tr>

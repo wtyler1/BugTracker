@@ -15,8 +15,7 @@ namespace BugTracker.Models
         public string FullName { get; set; }
         public ApplicationUser()
         {
-            this.AssignedTickets = new HashSet<Ticket>();
-            this.OwnerTickets = new HashSet<Ticket>(); 
+
             this.TicketNotifications = new HashSet<TicketNotification>();
             this.TicketComments = new HashSet<TicketComment>();
             this.TicketHistories = new HashSet<TicketHistory>();
@@ -32,8 +31,6 @@ namespace BugTracker.Models
             return userIdentity;
         }
 
-        public virtual ICollection<Ticket> AssignedTickets { get; set; }
-        public virtual ICollection<Ticket> OwnerTickets { get; set; }
         public virtual ICollection<TicketNotification> TicketNotifications { get; set; }
         public virtual ICollection<TicketComment> TicketComments { get; set; }
         public virtual ICollection<TicketHistory> TicketHistories { get; set; }
