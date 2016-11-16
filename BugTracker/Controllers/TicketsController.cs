@@ -167,13 +167,92 @@ namespace BugTracker
         {
             if (ModelState.IsValid)
             {
-                // Edit changed the Created and Updated fields
+               
+                
+                Ticket oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+
+                if (ticket.AssignedToUserId != oldTicket.AssignedToUserId)
+                {
+
+                    var ticketHistory = new TicketHistory();
+                    ticketHistory.TicketId = ticket.Id;
+                    ticketHistory.Property = "Assigned User";
+                    ticketHistory.OldValue = db.Users.Find(oldTicket.AssignedToUserId).FirstName;
+                    ticketHistory.NewValue = db.Users.Find(ticket.AssignedToUserId).FirstName;
+                    ticketHistory.UserId = User.Identity.GetUserId();
+                    ticketHistory.Changed = DateTime.Now;
+                    db.TicketHistories.Add(ticketHistory);
+                    db.SaveChanges();
+                    //TODO: Add TicketNotifications
+                    
+                  }
+
+                if (ticket.TicketTypeId != oldTicket.TicketTypeId)
+                {
+
+                    var ticketHistory = new TicketHistory();
+                    ticketHistory.TicketId = ticket.Id;
+                    ticketHistory.Property = "Ticket Type";
+                    ticketHistory.OldValue = oldTicket.TicketType.Name;
+                    ticketHistory.NewValue = db.TicketTypes.Find(ticket.TicketTypeId).Name;
+                    ticketHistory.UserId = User.Identity.GetUserId();
+                    ticketHistory.Changed = DateTime.Now;
+                    db.TicketHistories.Add(ticketHistory);
+                    db.SaveChanges();
+                }
+
+                if (ticket.TicketPriorityId != oldTicket.TicketPriorityId)
+                {
+
+                    var ticketHistory = new TicketHistory();
+                    ticketHistory.TicketId = ticket.Id;
+                    ticketHistory.Property = "Ticket Priority";
+                    ticketHistory.OldValue = oldTicket.TicketPriorities.Name;
+                    ticketHistory.NewValue = db.TicketPriorities.Find(ticket.TicketPriorityId).Name;
+                    ticketHistory.UserId = User.Identity.GetUserId();
+                    ticketHistory.Changed = DateTime.Now;
+                    db.TicketHistories.Add(ticketHistory);
+                    db.SaveChanges();
+                }
+
+                if (ticket.TicketStatusId != oldTicket.TicketStatusId)
+                {
+
+                    var ticketHistory = new TicketHistory();
+                    ticketHistory.TicketId = ticket.Id;
+                    ticketHistory.Property = "Ticket Status";
+                    ticketHistory.OldValue = oldTicket.TicketStatus.Name;
+                    ticketHistory.NewValue = db.TicketStatuses.Find(ticket.TicketStatusId).Name;
+                    ticketHistory.UserId = User.Identity.GetUserId();
+                    ticketHistory.Changed = DateTime.Now;
+                    db.TicketHistories.Add(ticketHistory);
+                    db.SaveChanges();
+                }
+
+                if (ticket.Title != oldTicket.Title)
+                {
+
+                    var ticketHistory = new TicketHistory();
+                    ticketHistory.TicketId = ticket.Id;
+                    ticketHistory.Property = "Title";
+                    ticketHistory.OldValue = oldTicket.Title;
+                    ticketHistory.NewValue = ticket.Title;
+                    ticketHistory.Changed = DateTime.Now;
+                    ticketHistory.UserId = User.Identity.GetUserId();
+                    db.TicketHistories.Add(ticketHistory);
+                    db.SaveChanges();
+                }
+
+
+
                 //db.Entry(ticket).Property("ProjectId").IsModified = false;
                 ticket.Update = DateTime.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+
             }
+
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
@@ -184,43 +263,7 @@ namespace BugTracker
         }
         #endregion
 
-        #region Ticket Assign
-        //[Authorize(Roles = "Admin,PM")]
-        //public ActionResult AssignTicket(int id)
-        //{
-
-        //    var ticketId = db.Tickets.Find(id);
-        //    var roles = db.Roles.FirstOrDefault(r => r.Name == "Developer");
-        //    var userDV = db.Users.Where(u => u.Roles.Any(r => r.RoleId == roles.Id));
-
-
-        //    foreach (var user in db.Users.ToList())
-        //    {
-
-        //        var ticketCollection = new ViewModelTicket();
-        //        ticketCollection.FirstName = user.FirstName;
-        //        ticketCollection.LastName = user.LastName;
-        //        //    // TODO: dont understand this 
-        //        ticketCollection.SelectedUsers = helper.ListUserRole(user.Id).ToArray();
-        //        //ticketCollection.SelectedUsers = helper.ListUserRole(user.Id).ToArray();
-        //        ticketCollection.TicketUsersAssigned = new MultiSelectList(userDV, "Id", "FullName", ticketCollection.SelectedUsers);
-
-
-        //        return View(ticketCollection);
-        //    }
-
-        //    return View();
-        //}
-
-        ////POST: Projects/AssignUsers
-        //[HttpPost]
-        // public ActionResult AssignTicket (ViewModelTicket model)
-        //{
-
-        //    return RedirectToAction("Index");
-        //}
-
-        #endregion
+      
 
         // GET: Tickets/Delete/5
         public ActionResult Delete(int? id)

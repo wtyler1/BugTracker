@@ -247,7 +247,7 @@
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Controllers\TicketCommentsController.cs" />
     <Compile Include="Controllers\TicketAttachmentsController.cs" />
-    <Compile Include="TicketHistoriesController.cs" />
+    <Compile Include="Controllers\TicketHistoriesController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

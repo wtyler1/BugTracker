@@ -17,7 +17,6 @@ namespace BugTracker
         // GET: TicketHistories
         public ActionResult Index()
         {
-            //TODO : AsNoTracking 
             var ticketHistories = db.TicketHistories.Include(t => t.User);
             return View(ticketHistories.ToList());
         }
