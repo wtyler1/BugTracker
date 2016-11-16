@@ -9,13 +9,13 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Ticket</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model=>model.OwnerUser)
+        @Html.HiddenFor(model => model.OwnerUser)
         @Html.HiddenFor(model => model.OwnerUserId)
 
         <div class="form-group">
@@ -25,12 +25,13 @@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
-       @Html.HiddenFor(model=>model.Created)
+        @Html.HiddenFor(model => model.Created)
 
         <div class="form-group">
             @Html.LabelFor(model => model.ProjectId, "ProjectId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DisplayFor(model =>model.Project.Name)
+                @Html.HiddenFor(model => model.ProjectId)
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +51,9 @@
                 @Html.ValidationMessageFor(model => model.TicketPriorityId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+       
+         @if (User.IsInRole("PM") | User.IsInRole("Admin"))
+         {
         <div class="form-group">
             @Html.LabelFor(model => model.TicketStatusId, "TicketStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -58,24 +61,47 @@
                 @Html.ValidationMessageFor(model => model.TicketStatusId, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.OwnerUserId, "OwnerUserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.OwnerUser.FullName)
-                @Html.ValidationMessageFor(model => model.OwnerUserId, "", new { @class = "text-danger" })
+         }
+         else
+         {
+            <div class="form-group">
+                @Html.LabelFor(model => model.TicketStatusId, "TicketStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.TicketStatus.Name)
+                    @Html.HiddenFor(model => model.TicketStatusId)
+                    @Html.ValidationMessageFor(model => model.TicketStatusId, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>*@
+         }
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.OwnerUserId, "OwnerUserId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.OwnerUser.FullName)
+                    @Html.ValidationMessageFor(model => model.OwnerUserId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
-        @if (User.IsInRole("PM")| User.IsInRole("Admin"))
+        @if (User.IsInRole("PM") | User.IsInRole("Admin"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.AssignedToUserId, "AssignedToUserId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("AssignedToUserId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        else
         {
         <div class="form-group">
             @Html.LabelFor(model => model.AssignedToUserId, "AssignedToUserId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("AssignedToUserId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DisplayFor(model=>model.AssignedToUser.FullName)
+                @Html.HiddenFor(model => model.AssignedToUserId)
                 @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
             </div>
         </div>
+
         }
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

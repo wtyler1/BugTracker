@@ -54,8 +54,9 @@ namespace BugTracker
 
             return View();
  }
-            
+
         // GET: Tickets/Details/5
+        [Authorize(Roles = "Admin,PM,Developer,Submitter")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -63,6 +64,8 @@ namespace BugTracker
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Ticket ticket = db.Tickets.Find(id);
+
+
             if (ticket == null)
             {
                 return HttpNotFound();
@@ -71,7 +74,7 @@ namespace BugTracker
         }
  #region Tickets Create
         // GET: Tickets/Create
-        [Authorize(Roles ="Admin,PM,Submitter,Developer")]
+        [Authorize(Roles ="Submitter")]
         public ActionResult Create()
         {
             var user = User.Identity.GetUserId();
@@ -86,10 +89,9 @@ namespace BugTracker
             //}
                 ViewBag.ProjectId = new SelectList(Userprojectlist, "Id", "Name");
             //TODO: submitter, Developer can not assign ticket
-            if (User.IsInRole("Admin") | User.IsInRole("PM"))
-            {
-                ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName");
-            }
+
+            //ViewBag.AssignedToUser = db.Users.Where(u => u.FirstName == "UnAssigned");
+            
             //TODO: not pulling Full name onto the View might need to use ViewModel
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
@@ -104,20 +106,21 @@ namespace BugTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "Id,Title,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
                 //Bring Full name of User
-                
+                ticket.AssignedToUserId = db.Users.FirstOrDefault(u => u.FirstName == "UnAssigned").Id;
                 ticket.OwnerUserId = User.Identity.GetUserId();
+                
                 ticket.Created = DateTime.Now;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
+            //ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
@@ -126,10 +129,11 @@ namespace BugTracker
             return View(ticket);
         }
         #endregion
-        #region Tickets Edit
+    
+    #region Tickets Edit
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
-        {
+        { 
             var roles = db.Roles.FirstOrDefault(r => r.Name == "Developer");
             var userDV = db.Users.Where(u => u.Roles.Any(r => r.RoleId == roles.Id));
             if (id == null)
@@ -164,7 +168,7 @@ namespace BugTracker
             if (ModelState.IsValid)
             {
                 // Edit changed the Created and Updated fields
-              
+                //db.Entry(ticket).Property("ProjectId").IsModified = false;
                 ticket.Update = DateTime.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
@@ -181,40 +185,40 @@ namespace BugTracker
         #endregion
 
         #region Ticket Assign
-        [Authorize(Roles = "Admin,PM")]
-        public ActionResult AssignTicket(int id)
-        {
-            
-            var ticketId = db.Tickets.Find(id);
-            var roles = db.Roles.FirstOrDefault(r => r.Name == "Developer");
-            var userDV = db.Users.Where(u => u.Roles.Any(r => r.RoleId == roles.Id));
+        //[Authorize(Roles = "Admin,PM")]
+        //public ActionResult AssignTicket(int id)
+        //{
+
+        //    var ticketId = db.Tickets.Find(id);
+        //    var roles = db.Roles.FirstOrDefault(r => r.Name == "Developer");
+        //    var userDV = db.Users.Where(u => u.Roles.Any(r => r.RoleId == roles.Id));
 
 
-            foreach (var user in db.Users.ToList())
-            {
+        //    foreach (var user in db.Users.ToList())
+        //    {
 
-                var ticketCollection = new ViewModelTicket();
-                ticketCollection.FirstName = user.FirstName;
-                ticketCollection.LastName = user.LastName;
-                //    // TODO: dont understand this 
-                ticketCollection.SelectedUsers = helper.ListUserRole(user.Id).ToArray();
-                //ticketCollection.SelectedUsers = helper.ListUserRole(user.Id).ToArray();
-                ticketCollection.TicketUsersAssigned = new MultiSelectList(userDV, "Id", "FullName", ticketCollection.SelectedUsers);
+        //        var ticketCollection = new ViewModelTicket();
+        //        ticketCollection.FirstName = user.FirstName;
+        //        ticketCollection.LastName = user.LastName;
+        //        //    // TODO: dont understand this 
+        //        ticketCollection.SelectedUsers = helper.ListUserRole(user.Id).ToArray();
+        //        //ticketCollection.SelectedUsers = helper.ListUserRole(user.Id).ToArray();
+        //        ticketCollection.TicketUsersAssigned = new MultiSelectList(userDV, "Id", "FullName", ticketCollection.SelectedUsers);
 
 
-                return View(ticketCollection);
-            }
+        //        return View(ticketCollection);
+        //    }
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        //POST: Projects/AssignUsers
-        [HttpPost]
-         public ActionResult AssignTicket (ViewModelTicket model)
-        {
-            
-            return RedirectToAction("Index");
-        }
+        ////POST: Projects/AssignUsers
+        //[HttpPost]
+        // public ActionResult AssignTicket (ViewModelTicket model)
+        //{
+
+        //    return RedirectToAction("Index");
+        //}
 
         #endregion
 

@@ -79,28 +79,28 @@ namespace BugTracker
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public ActionResult AssignUsersRemove (AssignViewModel model)
-        {
-            foreach (var usersremove in model.SelectedUsers)
-            {
-                //phelper.RemoveUserFromProject(usersremove, Convert.ToInt32(model.Id));
-                phelper.RemoveUserFromProject(usersremove, model.Id);
-            }
-            return RedirectToAction("Index");
-        }
+        //[HttpPost]
+        //public ActionResult AssignUsersRemove (AssignViewModel model)
+        //{
+        //    foreach (var usersremove in model.SelectedUsers)
+        //    {
+        //        //phelper.RemoveUserFromProject(usersremove, Convert.ToInt32(model.Id));
+        //        phelper.RemoveUserFromProject(usersremove, model.Id);
+        //    }
+        //    return RedirectToAction("Index");
+        //}
 
-        [HttpPost]
-         public ActionResult AssignUsersAdd(AssignViewModel model)
-        {
-            foreach (var useradd in model.SelectedUsers)
-            {
-                //phelper.AddUserToProject(useradd, Convert.ToInt32(model.Id));
-                phelper.AddUserToProject(useradd, model.Id);
+        //[HttpPost]
+        // public ActionResult AssignUsersAdd(AssignViewModel model)
+        //{
+        //    foreach (var useradd in model.SelectedUsers)
+        //    {
+        //        //phelper.AddUserToProject(useradd, Convert.ToInt32(model.Id));
+        //        phelper.AddUserToProject(useradd, model.Id);
 
-            }
-            return RedirectToAction("Index");
-        }
+        //    }
+        //    return RedirectToAction("Index");
+        //}
 
         // GET: Projects/Details/5
         public ActionResult Details(int? id)

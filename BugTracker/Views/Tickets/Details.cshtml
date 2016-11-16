@@ -11,23 +11,23 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.AssignedToUser.FirstName)
+           Assigned To:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.AssignedToUser.FirstName)
+            @Html.DisplayFor(model => model.AssignedToUser.FullName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OwnerUser.FirstName)
+            Ticket Owner
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.OwnerUser.FirstName)
+            @Html.DisplayFor(model => model.OwnerUser.FullName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Name)
+            Project Name
         </dt>
 
         <dd>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketPriorities.Name)
+           Ticket Priority
         </dt>
 
         <dd>
@@ -43,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketStatus.Name)
+            Ticket Status
         </dt>
 
         <dd>
@@ -51,7 +51,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketType.Name)
+           Ticket Type
         </dt>
 
         <dd>
@@ -59,7 +59,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            Ticket Title
         </dt>
 
         <dd>
@@ -84,7 +84,113 @@
 
     </dl>
 </div>
+
 <p>
+
+
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<h3>Comments </h3>
+
+<table>
+    @foreach (var usercomment in Model.TicketComments)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.User.FirstName )
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.TicketId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = usercomment.Id }, null ) |
+                @Html.ActionLink("Details", "Details", "TicketComments", new { id = usercomment.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = usercomment.Id }, null)
+            </td>
+        </tr>
+
+    }
+</table>
+
+@using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="TicketId" value="@Model.Id" />
+                                <div>
+                                   
+
+
+                                    <div class="col-md-12">
+                                        <textarea placeholder="Message" name="Comment" id="message" class="form-full" required></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-lg btn-black" type="submit">Comment</button>
+                                    </div>
+                                </div>
+}
+
+<h3> TicketAttachments</h3>
+
+@foreach (var item in Model.TicketAttachments)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TicketId)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            <img src="@Url.Content(item.FileURL)" style="height:150px; width:150px;" />
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+
+@using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="TicketId" value="@Model.Id" />
+    <div>
+
+
+
+        <div class="col-md-12">
+            <textarea placeholder="Description" name="Description" id="message" class="form-full" required></textarea>
+        </div>
+
+        <!--Input for Image-->
+        <div class="form-group">
+           <!-- Need Label-->
+             <h3>File Url</h3>
+            <div class="col-md-10">
+                <input type="file" name="Image" class="form-control" />
+               
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <button class="btn btn-lg btn-black" type="submit">Attach</button>
+        </div>
+    </div>
+}
