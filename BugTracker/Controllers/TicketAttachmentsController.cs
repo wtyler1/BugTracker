@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using BugTracker.Models;
 using Microsoft.AspNet.Identity;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace BugTracker
 {
@@ -54,8 +55,10 @@ namespace BugTracker
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,PM,Submitter,Developer")]
-        public ActionResult Create([Bind(Include = "Id,TicketId,Description,FileURL")] TicketAttachment ticketAttachment, HttpPostedFileBase Image)
+        public async Task<ActionResult> Create([Bind(Include = "Id,TicketId,Description,FileURL")] TicketAttachment ticketAttachment, HttpPostedFileBase Image)
         {
+            var tOwner = db.Tickets.FirstOrDefault(t => t.Id == ticketAttachment.TicketId).OwnerUser.FullName;
+
             if (ModelState.IsValid)
             {
                 //Add image
@@ -70,6 +73,19 @@ namespace BugTracker
                 ticketAttachment.Created = DateTime.Now;
                 db.TicketAttachments.Add(ticketAttachment);
                 db.SaveChanges();
+                //TODO: Add TicketNotifications for Attachments
+                var svc2 = new EmailService();
+                var msg2 = new IdentityMessage();
+                var newdev = db.Tickets.FirstOrDefault(t => t.Id == ticketAttachment.TicketId).AssignedToUser.Email;
+
+
+                var newdevname = db.Tickets.FirstOrDefault(t => t.Id == ticketAttachment.TicketId).AssignedToUser.FullName;
+                msg2.Destination = newdev;
+                msg2.Subject = "BugTracker";
+                msg2.Body =" An attachment has been added to " + tOwner + "'s ticket. ";
+
+                await svc2.SendAsync(msg2);
+
                 return RedirectToAction("Details","Tickets", new {id = ticketAttachment.TicketId });
                 //return RedirectToAction("Index");
             }
@@ -106,7 +122,7 @@ namespace BugTracker
             {
                 db.Entry(ticketAttachment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
             }
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
             return View(ticketAttachment);
@@ -136,7 +152,7 @@ namespace BugTracker
             TicketAttachment ticketAttachment = db.TicketAttachments.Find(id);
             db.TicketAttachments.Remove(ticketAttachment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Tickets");
         }
 
         protected override void Dispose(bool disposing)

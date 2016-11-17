@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace BugTracker
 {
@@ -51,15 +52,30 @@ namespace BugTracker
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,PM,Submitter,Developer")]
-        public ActionResult Create([Bind(Include = "Id,Comment,TicketId")] TicketComment ticketComment)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Comment,TicketId")] TicketComment ticketComment)
         {
+            var tOwner = db.Tickets.FirstOrDefault(t => t.Id == ticketComment.TicketId).OwnerUser.FullName;
             if (ModelState.IsValid)
             {
                 ticketComment.UserId = User.Identity.GetUserId();
                 ticketComment.Created = DateTime.Now;
                 db.TicketComments.Add(ticketComment);
                 db.SaveChanges();
-               
+
+                var svc2 = new EmailService();
+                var msg2 = new IdentityMessage();
+
+                // Find the Email of Dev
+                var newdev = db.Tickets.FirstOrDefault(t => t.Id == ticketComment.TicketId).AssignedToUser.Email;
+
+
+                var newdevname = db.Tickets.FirstOrDefault(t => t.Id == ticketComment.TicketId).AssignedToUser.FullName;
+                msg2.Destination = newdev;
+                msg2.Subject = "BugTracker";
+                msg2.Body = " A Comment has been added to " + tOwner + "'s ticket. ";
+
+                await svc2.SendAsync(msg2);
+
                 return RedirectToAction("Details","Tickets", new {id =ticketComment.TicketId });
             }
 
@@ -95,7 +111,7 @@ namespace BugTracker
             {
                 db.Entry(ticketComment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
             }
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketComment.UserId);
             return View(ticketComment);
@@ -125,7 +141,7 @@ namespace BugTracker
             TicketComment ticketComment = db.TicketComments.Find(id);
             db.TicketComments.Remove(ticketComment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Tickets");
         }
 
         protected override void Dispose(bool disposing)

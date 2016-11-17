@@ -15,5 +15,6 @@ namespace BugTracker.Models
         public string FileURL { get; set; }
 
         public virtual ApplicationUser User { get; set;}
+        public virtual Ticket ticket { get; set; }
     }
 }

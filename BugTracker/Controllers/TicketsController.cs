@@ -10,7 +10,7 @@ using System.Data.Entity;
 using System.Linq;
 
 using System.Web;
-
+using System.Threading.Tasks;
 
 namespace BugTracker
 {
@@ -163,13 +163,17 @@ namespace BugTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Title,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Created,Title,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
-               
-                
+                var user = db.Users.Find(User.Identity.GetUserId());
+
+
                 Ticket oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                
+                
+                var tOwner = db.Users.Find(ticket.OwnerUserId).FullName;
 
                 if (ticket.AssignedToUserId != oldTicket.AssignedToUserId)
                 {
@@ -183,9 +187,20 @@ namespace BugTracker
                     ticketHistory.Changed = DateTime.Now;
                     db.TicketHistories.Add(ticketHistory);
                     db.SaveChanges();
-                    //TODO: Add TicketNotifications
-                    
-                  }
+                    // TicketNotifications
+                    var svc2 = new EmailService();
+                    var msg2 = new IdentityMessage();
+                    var newdev = db.Users.Find(ticket.AssignedToUserId).Email;
+                    var olddev = db.Users.Find(oldTicket.AssignedToUserId).Email;
+                    var newdevname = db.Users.Find(ticket.AssignedToUserId).FullName;
+                    var olddevname = db.Users.Find(oldTicket.AssignedToUserId).FullName;
+                    msg2.Destination =newdev;
+                    msg2.Subject = "BugTracker";
+                    msg2.Body = tOwner + "'s Ticket has been removed from " + olddevname + " and assigned to " + newdevname ;
+
+                    await svc2.SendAsync(msg2);
+
+                }
 
                 if (ticket.TicketTypeId != oldTicket.TicketTypeId)
                 {
@@ -199,6 +214,16 @@ namespace BugTracker
                     ticketHistory.Changed = DateTime.Now;
                     db.TicketHistories.Add(ticketHistory);
                     db.SaveChanges();
+                    //TODO: Check TicketNotifications TType
+                    var svc2 = new EmailService();
+                    var msg2 = new IdentityMessage();
+                    var newdev = db.Users.Find(ticket.AssignedToUserId).Email;
+                    var newdevname = db.Users.Find(ticket.AssignedToUserId).FullName;
+                    msg2.Destination = newdev;
+                    msg2.Subject = "BugTracker";
+                    msg2.Body = tOwner + "s Ticket's Type has been changed ";
+
+                    await svc2.SendAsync(msg2);
                 }
 
                 if (ticket.TicketPriorityId != oldTicket.TicketPriorityId)
@@ -213,6 +238,16 @@ namespace BugTracker
                     ticketHistory.Changed = DateTime.Now;
                     db.TicketHistories.Add(ticketHistory);
                     db.SaveChanges();
+                    //TODO: Check TicketNotifications TPriority
+                    var svc2 = new EmailService();
+                    var msg2 = new IdentityMessage();
+                    var newdev = db.Users.Find(ticket.AssignedToUserId).Email;
+                    var newdevname = db.Users.Find(ticket.AssignedToUserId).FullName;
+                    msg2.Destination = newdev;
+                    msg2.Subject = "BugTracker";
+                    msg2.Body = tOwner + "'s Ticket Priority has been changed ";
+
+                    await svc2.SendAsync(msg2);
                 }
 
                 if (ticket.TicketStatusId != oldTicket.TicketStatusId)
@@ -227,6 +262,16 @@ namespace BugTracker
                     ticketHistory.Changed = DateTime.Now;
                     db.TicketHistories.Add(ticketHistory);
                     db.SaveChanges();
+                    //TODO: Check TicketNotifications TStatus
+                    var svc2 = new EmailService();
+                    var msg2 = new IdentityMessage();
+                    var newdev = db.Users.Find(ticket.AssignedToUserId).Email;
+                    var newdevname = db.Users.Find(ticket.AssignedToUserId).FullName;
+                    msg2.Destination = newdev;
+                    msg2.Subject = "BugTracker";
+                    msg2.Body = tOwner + "'s Ticket Status has been changed ";
+
+                    await svc2.SendAsync(msg2);
                 }
 
                 if (ticket.Title != oldTicket.Title)
@@ -241,8 +286,20 @@ namespace BugTracker
                     ticketHistory.UserId = User.Identity.GetUserId();
                     db.TicketHistories.Add(ticketHistory);
                     db.SaveChanges();
+
+                    //TODO: Check TicketNotifications Title
+                    var svc2 = new EmailService();
+                    var msg2 = new IdentityMessage();
+                    var newdev = db.Users.Find(ticket.AssignedToUserId).Email;
+                    var newdevname = db.Users.Find(ticket.AssignedToUserId).FullName;
+                    msg2.Destination = newdev;
+                    msg2.Subject = "BugTracker";
+                    msg2.Body = tOwner + "'s Ticket Title has been changed ";
+
+                    await svc2.SendAsync(msg2);
                 }
 
+       
 
 
                 //db.Entry(ticket).Property("ProjectId").IsModified = false;

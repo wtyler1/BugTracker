@@ -98,3 +98,4 @@
 \\Mac\Home\Desktop\CoderFoundry\Projects\BugTracker\BugTracker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 \\Mac\Home\Desktop\CoderFoundry\Projects\BugTracker\BugTracker\obj\Debug\BugTracker.dll
 \\Mac\Home\Desktop\CoderFoundry\Projects\BugTracker\BugTracker\obj\Debug\BugTracker.pdb
+\\Mac\Home\Desktop\CoderFoundry\Projects\BugTracker\BugTracker\obj\Debug\BugTracker.csprojResolveAssemblyReference.cache

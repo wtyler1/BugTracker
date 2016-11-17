@@ -159,9 +159,9 @@
             <img src="@Url.Content(item.FileURL)" style="height:150px; width:150px;" />
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = item.Id }, null) |
+            @Html.ActionLink("Details", "Details", "TicketAttachments", new { id = item.Id }, null) |
+            @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = item.Id }, null)
         </td>
     </tr>
 }
