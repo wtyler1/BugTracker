@@ -36,7 +36,7 @@
                             }
                         </td>         
                         <td>
-                            @Html.ActionLink("Change Roles", "SelectRole", "Admin", new { id = item.user.Id }, null)
+                            @Html.ActionLink("Change Roles", "SelectRole", "Admin", new { id = item.user.Id }, new { @class = "btn btn-default btn-sm" })
                         </td>
                     </tr>
                 }

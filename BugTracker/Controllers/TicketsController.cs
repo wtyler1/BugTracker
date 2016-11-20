@@ -54,7 +54,7 @@ namespace BugTracker
 
             return View();
  }
-
+       
         // GET: Tickets/Details/5
         [Authorize(Roles = "Admin,PM,Developer,Submitter")]
         public ActionResult Details(int? id)
@@ -108,8 +108,8 @@ namespace BugTracker
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId")] Ticket ticket)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 //Bring Full name of User
                 ticket.AssignedToUserId = db.Users.FirstOrDefault(u => u.FirstName == "UnAssigned").Id;
                 ticket.OwnerUserId = User.Identity.GetUserId();
@@ -118,15 +118,15 @@ namespace BugTracker
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
+            //}
 
             //ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
-            ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
-            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
-            return View(ticket);
+            //ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
+            //ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
+            //ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
+            //ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
+            //ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
+            //return View(ticket);
         }
         #endregion
     

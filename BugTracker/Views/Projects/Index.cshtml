@@ -1,68 +1,106 @@
 ﻿@model IEnumerable<BugTracker.Models.Project>
 
-@{
-    ViewBag.Title = "Index";
-}
+<head>
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
 
-<h2>Index</h2>
-@if (User.IsInRole("Admin") | User.IsInRole("PM"))
-{
-    <p>
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/demo.min.css" rel="stylesheet" />
+</head>
+<body class="layout layout-header">
+    <div class="layout-header">
 
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
-
-<table class="table">
-    <tr>
-        <th>
-            Project Name
-        </th>
-        <th>
-            Created On
-        </th>
-        <th>
-            Assigned To
-        </th>
-       
-        
-       
-        <th></th>
-    </tr>
-
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(Time=>item.Created)
-        </td>
-        <td>
-            @foreach (var u in item.User)
+        <div class="text-center m-b">
+            <h3 class="m-b-0">Projects</h3>
+            @if (User.IsInRole("Admin") | User.IsInRole("PM"))
             {
+                <small>
 
-
-                @Html.DisplayFor(user => u.FullName)
-                <br />
+                    @Html.ActionLink("Create Project", "Create")
+                </small>
 
             }
-        </td>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="table-responsive">
 
-       
-        <td>
-            @if (User.IsInRole("Admin"))
+                            <table id="myTable" class="table table-middle ">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Project Name
+                                        </th>
+                                        <th>
+                                            Created On
+                                        </th>
+                                        <th>
+                                            Assigned To
+                                        </th>
+
+
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
             {
-            @Html.ActionLink("Change Project Name ", "Edit", new { id = item.Id }, new {@class="btn btn-default btn-sm"})
-                @Html.ActionLink("Delete ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" });
-            }
-            @*@Html.ActionLink("Details ", "Details", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })*@
-            @if (User.IsInRole("Admin") | User.IsInRole("PM")) {
-            @Html.ActionLink("Assign Project ", "AssignUsers", "Projects", new { id = item.Id }, new { @class="btn btn-info btn-sm"})
-            }
-        </td>
-    </tr>
-}
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(Time => item.Created)
+                                            </td>
+                                            <td>
 
-</table>
+                                                @foreach (var u in item.User)
+                                                {
+
+
+                                                    @Html.DisplayFor(user => u.FullName)
+                                                    <br />
+
+                                                }
+                                            </td>
+
+
+                                            <td>
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    @Html.ActionLink("Change Project Name ", "Edit", new { id = item.Id }, new { @class = "btn btn-default btn-sm" })
+                                                    @Html.ActionLink("Delete ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" });
+                                                }
+
+                                                @if (User.IsInRole("Admin") | User.IsInRole("PM"))
+                                                {
+                                                    @Html.ActionLink("Assign Project ", "AssignUsers", "Projects", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+                        @section scripts{
+                            <!--<script src="~/js/demo.min.js"></script>-->
+                            <script src="~/Scripts/jquery.dataTables.min.js"></script>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#myTable').DataTable();
+                                })
+
+                            </script>
+                        }
+</body>

@@ -12,7 +12,13 @@ namespace BugTracker.Controllers
         {
             return View();
         }
-        public ActionResult LandingPage()
+
+        public ActionResult dashboard()
+        {
+            return View();
+        }
+
+        public ActionResult Indexold()
         {
             return View();
         }
