@@ -9,18 +9,52 @@
 </head>
 <body class="layout layout-header">
     <div class="layout-header">
-
         <div class="text-center m-b">
-            <h3 class="m-b-0">Projects</h3>
-            @if (User.IsInRole("Admin") | User.IsInRole("PM"))
+    <h3 class="m-b-0">Projects</h3>
+    @if (User.IsInRole("Admin") | User.IsInRole("PM"))
             {
-                <small>
+        <small>
 
-                    @Html.ActionLink("Create Project", "Create")
-                </small>
+            @Html.ActionLink("Create Project", "Create")
+        </small>
 
-            }
+    }
+</div>
+
+        <div class="row gutter-xs">
+            <div class="col-xs-6">
+                <div class="card">
+                    <div class="card-values">
+                        <div class="p-x">
+                            <small>Projects</small>
+                            <h3 class="card-title fw-l">
+                                <!--Number of Projects-->
+                           </h3>
+                        </div>
+                    </div>
+                    <div class="card-chart">
+                        <canvas data-chart="line" data-animation="false" data-labels='["Jun 21", "Jun 20", "Jun 19", "Jun 18", "Jun 17", "Jun 16", "Jun 15"]' data-values='[{"backgroundColor": "rgba(97, 133, 168, 0.03)", "borderColor": "#6185a8", "data": [22808686, 21025319, 21963756, 13234568, 19898816, 15017935, 12671632]}]' data-scales='{"yAxes": [{ "ticks": {"max": 24519337}}]}' data-hide='["legend", "points", "scalesX", "scalesY", "tooltips"]' height="35"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="card">
+                    <div class="card-values">
+                        <div class="p-x">
+                            <small>Tickets</small>
+                            <h3 class="card-title fw-l">
+                                <!--Number of tickets-->
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-chart">
+                        <canvas data-chart="line" data-animation="false" data-labels='["Jun 21", "Jun 20", "Jun 19", "Jun 18", "Jun 17", "Jun 16", "Jun 15"]' data-values='[{"backgroundColor": "rgba(97, 133, 168, 0.03)", "borderColor": "#6185a8", "data": [206, 127, 155, 215, 162, 195, 196]}]' data-scales='{"yAxes": [{ "ticks": {"max": 231}}]}' data-hide='["legend", "points", "scalesX", "scalesY", "tooltips"]' height="35"></canvas>
+                    </div>
+                </div>
+            </div>
+        
         </div>
+      
         <div class="row">
             <div class="col-xs-12">
                 <div class="panel">
@@ -94,7 +128,7 @@
         </div>
     
                         @section scripts{
-                            <!--<script src="~/js/demo.min.js"></script>-->
+                           
                             <script src="~/Scripts/jquery.dataTables.min.js"></script>
                             <script>
                                 $(document).ready(function () {

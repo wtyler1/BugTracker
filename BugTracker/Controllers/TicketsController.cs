@@ -72,7 +72,25 @@ namespace BugTracker
             }
             return View(ticket);
         }
- #region Tickets Create
+
+        
+        
+        public ActionResult dashboard(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ticket ticket = db.Tickets.Find(id);
+
+
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ticket);
+        }
+        #region Tickets Create
         // GET: Tickets/Create
         [Authorize(Roles ="Submitter")]
         public ActionResult Create()

@@ -264,9 +264,10 @@
     <Content Include="css\jquery.dataTables.min.css" />
     <Content Include="css\login-3.min.css" />
     <Content Include="css\signup-3.min.css" />
+    <Content Include="css\style.css" />
     <Content Include="css\templatemo-style.css" />
     <Content Include="css\vendor.min.css" />
-    <None Include="Views\Home\dashboard.cshtml" />
+    <None Include="Views\Tickets\Details.cshtml" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -509,7 +510,7 @@
     <Content Include="Views\Tickets\Edit.cshtml" />
     <Content Include="Views\Tickets\Create.cshtml" />
     <Content Include="Views\Tickets\Delete.cshtml" />
-    <Content Include="Views\Tickets\Details.cshtml" />
+    <Content Include="Views\Tickets\Detailsold.cshtml" />
     <Content Include="Views\TicketAttachments\Create.cshtml" />
     <Content Include="Views\TicketAttachments\Delete.cshtml" />
     <Content Include="Views\TicketAttachments\Details.cshtml" />

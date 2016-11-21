@@ -122,22 +122,30 @@
                     <!--Role Demo -->
                     <div class="col-sm-6 col-md-3">
                         <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="0ms" style="visibility: visible; animation-duration: 400ms; animation-delay: 0ms; animation-name: zoomIn;">
-                            <button> Admin</button>
+                            <a href="@Url.Action("LoginDemo","Account", new { role = "Admin" })">      
+                             <button> Admin</button>
+                            </a>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="0ms" style="visibility: visible; animation-duration: 400ms; animation-delay: 0ms; animation-name: zoomIn;">
-                            <button> Project Manager</button>
+                            <a href="@Url.Action("LoginDemo","Account", new { role = "PM" })">    
+                                <button> Project Manager</button>
+                            </a>
+                         </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="0ms" style="visibility: visible; animation-duration: 400ms; animation-delay: 0ms; animation-name: zoomIn;">
+                            <a href="@Url.Action("LoginDemo","Account", new { role = "Developer" })">
+                                <button> Developer</button>
+                                </a>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="0ms" style="visibility: visible; animation-duration: 400ms; animation-delay: 0ms; animation-name: zoomIn;">
-                            <button> Developer</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="wow zoomIn" data-wow-duration="400ms" data-wow-delay="0ms" style="visibility: visible; animation-duration: 400ms; animation-delay: 0ms; animation-name: zoomIn;">
-                            <button> Submitter</button>
+                            <a href="@Url.Action("LoginDemo","Account", new { role = "Submitter" })">
+                                <button> Submitter</button>
+                                </a>
                         </div>
                     </div>
 				</div>

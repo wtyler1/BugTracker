@@ -1,196 +1,399 @@
 ﻿@model BugTracker.Models.Ticket
+<!DOCTYPE html>
 
-@{
-    ViewBag.Title = "Details";
-}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard &middot; Elephant Template &middot; The fastest way to build modern admin site for any platform, browser, or device</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="description" content="Elephant is a front-end template created to help you build modern web applications, fast and in a professional manner.">
+    <meta property="og:url" content="http://demo.naksoid.com/elephant">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="The fastest way to build modern admin site for any platform, browser, or device">
+    <meta property="og:description" content="Elephant is a front-end template created to help you build modern web applications, fast and in a professional manner.">
+    <meta property="og:image" content="http://demo.naksoid.com/elephant/img/ae165ef33d137d3f18b7707466aa774d.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:title" content="The fastest way to build modern admin site for any platform, browser, or device">
+    <meta name="twitter:description" content="Elephant is a front-end template created to help you build modern web applications, fast and in a professional manner.">
+    <meta name="twitter:image" content="http://demo.naksoid.com/elephant/img/ae165ef33d137d3f18b7707466aa774d.jpg">
+      <link href="~/css/style.css" rel="stylesheet" type="text/css" />
+   
+  </head>
+  <body class="layout layout-header-fixed">
+    
+   
 
-<h2>Details</h2>
+      <div class="row gutter-xs">
+          <div class="col-md-12"> 
+              <div class="card">
+               
+                
+              </div>
+          </div>
+      </div>
 
-<div>
-    <h4>Ticket</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-           Assigned To:
-        </dt>
+          <div class="row gutter-xs">
+              <div class=" col-md-7">
 
-        <dd>
-            @Html.DisplayFor(model => model.AssignedToUser.FullName)
-        </dd>
+                  <!--widget Ticket Detail-->
+                  <div class="card">
+                      <div class="card-header bg-default">
+                          <strong>Ticket Details</strong>
+                      </div>
+                      <div class="card-body">
+                          <dl class="dl-horizontal">
+                              <dt>
+                                  Assigned To:
+                              </dt>
 
-        <dt>
-            Ticket Owner
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.AssignedToUser.FullName)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.OwnerUser.FullName)
-        </dd>
+                              <dt>
+                                  Ticket Owner
+                              </dt>
 
-        <dt>
-            Project Name
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.OwnerUser.FullName)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Project.Name)
-        </dd>
+                              <dt>
+                                  Project Name
+                              </dt>
 
-        <dt>
-           Ticket Priority
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.Project.Name)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TicketPriorities.Name)
-        </dd>
+                              <dt>
+                                  Ticket Priority
+                              </dt>
 
-        <dt>
-            Ticket Status
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.TicketPriorities.Name)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TicketStatus.Name)
-        </dd>
+                              <dt>
+                                  Ticket Status
+                              </dt>
 
-        <dt>
-           Ticket Type
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.TicketStatus.Name)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TicketType.Name)
-        </dd>
+                              <dt>
+                                  Ticket Type
+                              </dt>
 
-        <dt>
-            Ticket Title
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.TicketType.Name)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+                              <dt>
+                                  Ticket Title
+                              </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.Title)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
+                              <dt>
+                                  @Html.DisplayNameFor(model => model.Created)
+                              </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Update)
-        </dt>
+                              <dd>
+                                  @Html.DisplayFor(model => model.Created)
+                              </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Update)
-        </dd>
+                              <dt>
+                                  @Html.DisplayNameFor(model => model.Update)
+                              </dt>
 
-    </dl>
-</div>
+                              <dd>
+                                  @Html.DisplayFor(model => model.Update)
+                              </dd>
 
-<p>
+                          </dl>
+                          @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                          @Html.ActionLink("Back to List", "Index")
+                          @*<ul class="media-list">
+                              <li class="media">
+                                  <div class="media-middle media-left">
+                                      Name
+                                  </div>
+                                  <div class="media-middle media-body" style="text-align:center">
+                                      <small>Tyler</small>
+                                  </div>
 
+                                  @*<div class="media-middle media-right">
+                                <small class="label arrow-left arrow-warning">97k views</small>
+                            </div>*@
+                              </li>
+                              <hr />
+                          </ul>
+                      </div>
+                  </div>
 
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-<h3>Comments </h3>
-
-<table>
-    @foreach (var usercomment in Model.TicketComments)
-    {
-
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => usercomment.User.FirstName )
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => usercomment.Comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => usercomment.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => usercomment.TicketId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = usercomment.Id }, null ) |
-                @Html.ActionLink("Details", "Details", "TicketComments", new { id = usercomment.Id }, null) |
-                @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = usercomment.Id }, null)
-            </td>
-        </tr>
-
-    }
-</table>
-
-@using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="TicketId" value="@Model.Id" />
-                                <div>
-                                   
-
-
-                                    <div class="col-md-12">
-                                        <textarea placeholder="Message" name="Comment" id="message" class="form-full" required></textarea>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <button class="btn btn-lg btn-black" type="submit">Comment</button>
-                                    </div>
-                                </div>
-}
-
-<h3> TicketAttachments</h3>
-
-@foreach (var item in Model.TicketAttachments)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketId)
-        </td>
-
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            <img src="@Url.Content(item.FileURL)" style="height:150px; width:150px;" />
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = item.Id }, null) |
-            @Html.ActionLink("Details", "Details", "TicketAttachments", new { id = item.Id }, null) |
-            @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = item.Id }, null)
-        </td>
-    </tr>
-}
-
-
-@using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="TicketId" value="@Model.Id" />
-    <div>
+                  <!--Widget Comments-->
+                  <div class="card">
+                      <div class="card-header bg-default">
+                          <strong>Ticket Comments</strong>
+                      </div>
+                      <div class="post-comment mtb-30">
+                          <ul class="comment-list mt-30">
+                            @foreach (var usercomment in Model.TicketComments)
+                            {
+                                @Html.HiddenFor(modelItem => usercomment.TicketId)
+                                <li>
+                                 <div class="">
+                                      <div class="comment-reply">
+                                          <div class="comment-avatar">
+                                              <img src="~/img/user-av.jpg">
+                                          </div>
+                                          <div class="">
+                                              <div class="comment-detail">
+                                                  <h6>@Html.DisplayFor(modelItem => usercomment.User.FirstName)</h6>
+                                                  <div class="post-meta"><span>@Html.DisplayFor(modelItem => usercomment.Created)</span></div>
+                                                  <p>@Html.DisplayFor(modelItem => usercomment.Comment)</p>
+                                                  @*@if (usercomment.Update != null)
+                                                  {
+                                                <p>Updated on @usercomment.Update</p>
+                                                  }*@
+                                              </div>
+                                              @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = usercomment.Id }, null) |
+                                              @Html.ActionLink("Remove Commment", "Delete", "TicketComments", new { id = usercomment.Id }, null)
+                                          </div>
+                                      </div>
+                                  </div>
+                              </li>
+                            }
+                          </ul>
+                          @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="TicketId" value="@Model.Id" />
+            <div>
 
 
 
-        <div class="col-md-12">
-            <textarea placeholder="Description" name="Description" id="message" class="form-full" required></textarea>
-        </div>
-
-        <!--Input for Image-->
-        <div class="form-group">
-           <!-- Need Label-->
-             <h3>File Url</h3>
-            <div class="col-md-10">
-                <input type="file" name="Image" class="form-control" />
+                
+                    <textarea placeholder="Message" name="Comment" id="message" class="form-full" required></textarea>
+              
+               
+                    <button class="btn btn-lg btn" type="submit">Comment</button>
                
             </div>
-        </div>
+        } 
+                      </div>
+                    
+                  </div>
+                  <div class="card">
+                      <div class="card-header bg-default">
+                          <strong>Ticket Attachments</strong>
+                      </div>
+                      <div class="card-body">
+                          @foreach (var item in Model.TicketAttachments)
+                          {
+                              <tr>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.User.FirstName)
+                                  </td>
+                                  <td>
+                                      @Html.HiddenFor(modelItem => item.TicketId)
+                                  </td>
 
-        <div class="col-md-12">
-            <button class="btn btn-lg btn-black" type="submit">Attach</button>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.Description)
+                                  </td>
+                                  <td>
+                                      @Html.DisplayFor(modelItem => item.Created)
+                                  </td>
+                                  <td>
+                                      <img src="@Url.Content(item.FileURL)" style="height:150px; width:150px;" />
+                                  </td>
+                                  <td>
+                                      @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = item.Id }, null) |
+                                      @Html.ActionLink("Details", "Details", "TicketAttachments", new { id = item.Id }, null) |
+                                      @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = item.Id }, null)
+                                  </td>
+                              </tr>
+                          }
+                          @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                          {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="TicketId" value="@Model.Id" />
+                          <div class="col-md-12">
+                              <textarea placeholder="Description" name="Description" id="message" class="form-full" required></textarea>
+                          </div>
+                          <!--Input for Image-->
+                          <div class="form-group">
+                              <!-- Need Label-->
+                              <h3 style="">File Url</h3>
+                              <div class="col-md-10">
+                                  <input type="file" name="Image" class="form-control" />
+
+                                  <button class="btn btn-lg btn" type="submit">Attach</button>
+                                 
+                              </div>
+                          </div>
+                          }
+                          </div>
+                      </div>
+
+                         
+                   
+
+                      </div>
+                      <div class=" col-md-5">
+                          <div class="card">
+                              <div class="card-header">
+                                  <strong>Ticket History</strong>
+                              </div>
+                              <div class="card-body">
+                                  <div class="card-search">
+                                      <div class="card-search-box">
+                                          <form action="#">
+                                              <div class="form-group">
+                                                  <div class="input-with-icon">
+                                                      <input class="form-control input-thick pill" type="text" placeholder="Search…">
+                                                      <span class="icon icon-search input-icon"></span>
+                                                  </div>
+                                              </div>
+                                          </form>
+                                      </div>
+                                      <div class="card-search-results">
+                                          <div class="timeline">
+                                              <div class="timeline-item">
+                                                  <div class="timeline-segment">
+                                                      <div class="timeline-divider"></div>
+                                                  </div>
+                                                  <div class="timeline-content"></div>
+                                              </div>
+                                            @foreach (var tHistory in Model.TicketHistories)
+                                                    {
+                                              @Html.HiddenFor(modelItem => tHistory.TicketId)
+                                              <div class="timeline-item">
+                                                  <div class="timeline-segment">
+                                                      <div class="timeline-media bg-default circle sq-24">
+                                                          <div class="icon icon-comments"></div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="timeline-content">
+                                                      <div class="timeline-row">
+                                                          @Html.DisplayFor(modelItem => tHistory.User.FirstName)
+                                                          <small>@Html.DisplayFor(modelItem => tHistory.Changed)</small>
+                                                      </div>
+                                                      <div class="timeline-row">
+                                                          <p>
+                                                              <small>Made Changes to @Html.DisplayFor(modelItem => tHistory.Property) from @Html.DisplayFor(modelItem => tHistory.OldValue) to @Html.DisplayFor(modelItem => tHistory.NewValue)</small>
+                                                          </p>
+                                                       </div>
+                                                  </div>
+                                              </div>
+                                                        }
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="card-actions">
+                                      <button class="btn btn-primary btn-sm btn-block" type="button">See all</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="layout-footer">
+                      <div class="layout-footer-body">
+                          <small class="version">Version 1.0.0</small>
+                          <small class="copyright">2016 &copy; Elephant By <a href="http://naksoid.com/">Naksoid</a></small>
+                      </div>
+                  </div>
+              </div>
+    <div class="theme">
+      <div class="theme-panel theme-panel-collapsed">
+        <div class="theme-panel-controls">
+          <button class="theme-panel-toggler" title="Expand theme panel ( ] )" type="button">
+            <span class="icon icon-cog icon-spin" aria-hidden="true"></span>
+          </button>
         </div>
+        <div class="theme-panel-body">
+          <div class="custom-scrollbar">
+            <div class="custom-scrollbar-inner">
+              <h5 class="theme-heading">
+                Custom Layout
+              </h5>
+              <ul class="theme-settings">
+                <li class="theme-settings-heading">
+                  <div class="divider">
+                    <div class="divider-content">Theme Settings</div>
+                  </div>
+                </li>
+                <li class="theme-settings-item">
+                  <div class="theme-settings-label">Header fixed</div>
+                  <div class="theme-settings-switch">
+                    <label class="switch switch-primary">
+                      <input class="switch-input" type="checkbox" name="layout-header-fixed" data-sync="true">
+                      <span class="switch-track"></span>
+                      <span class="switch-thumb"></span>
+                    </label>
+                  </div>
+                </li>
+                <li class="theme-settings-item">
+                  <div class="theme-settings-label">Sidebar fixed</div>
+                  <div class="theme-settings-switch">
+                    <label class="switch switch-primary">
+                      <input class="switch-input" type="checkbox" name="layout-sidebar-fixed" data-sync="true">
+                      <span class="switch-track"></span>
+                      <span class="switch-thumb"></span>
+                    </label>
+                  </div>
+                </li>
+                <li class="theme-settings-item">
+                  <div class="theme-settings-label">Sidebar sticky*</div>
+                  <div class="theme-settings-switch">
+                    <label class="switch switch-primary">
+                      <input class="switch-input" type="checkbox" name="layout-sidebar-sticky" data-sync="true">
+                      <span class="switch-track"></span>
+                      <span class="switch-thumb"></span>
+                    </label>
+                  </div>
+                </li>
+                <li class="theme-settings-item">
+                  <div class="theme-settings-label">Sidebar collapsed</div>
+                  <div class="theme-settings-switch">
+                    <label class="switch switch-primary">
+                      <input class="switch-input" type="checkbox" name="layout-sidebar-collapsed" data-sync="false">
+                      <span class="switch-track"></span>
+                      <span class="switch-thumb"></span>
+                    </label>
+                  </div>
+                </li>
+                <li class="theme-settings-item">
+                  <div class="theme-settings-label">Footer fixed</div>
+                  <div class="theme-settings-switch">
+                    <label class="switch switch-primary">
+                      <input class="switch-input" type="checkbox" name="layout-footer-fixed" data-sync="true">
+                      <span class="switch-track"></span>
+                      <span class="switch-thumb"></span>
+                    </label>
+                  </div>
+                </li>
+                <li class="theme-settings-description">
+                  <span>
+                    <strong>Sidebar sticky*</strong> - by scrolling up and down the page, the menu placed on the sidebar moves along with the content until the bottom of the menu is reached.</a></span>
+                </li>
+              </ul>
+              <hr class="theme-divider">
+           
+            </div>
+          </div>
+        </div>
+        
+      </div>
     </div>
-}
+
+  </body>
+</html>

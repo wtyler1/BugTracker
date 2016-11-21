@@ -21,7 +21,35 @@ namespace BugTracker.Controllers
         public AccountController()
         {
         }
-
+        //  Demo login controller
+        [AllowAnonymous]
+        public async Task<ActionResult> LoginDemo(string role)
+        {
+            var result = SignInStatus.Success;
+            switch (role)
+            {
+                case "Submitter":
+                    result = await SignInManager.PasswordSignInAsync("frostalz@aol.com", "Password123!@#", false, false);
+                    break;
+                case "Developer":
+                    result = await SignInManager.PasswordSignInAsync("ravens@aol.com", "Password123!@#", false, false);
+                    break;
+                case "PM":
+                    result = await SignInManager.PasswordSignInAsync("Ashleyfrost@aol.com", "Password123!@#", false, false);
+                    break;
+                default:
+                    result = await SignInManager.PasswordSignInAsync("weltontylerii@gmail.com", "Password123!@#", false, false);
+                    break;
+            }
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToAction("Index", "Projects");
+                case SignInStatus.Failure:
+                default:
+                    return RedirectToAction("Login");
+            }
+        }
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;

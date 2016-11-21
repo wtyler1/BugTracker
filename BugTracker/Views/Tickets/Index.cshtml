@@ -14,11 +14,87 @@
                 <small>@Html.ActionLink("Add Ticket", "Create")</small>
             </div>
             <div class="row">
+                <!--TicketSample Data-->
+                <div class="row gutter-xs">
+                    <!-- TicketSample Unresolved-->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-middle media-left">
+                                        <span class="bg-default sq-64 circle">
+                                            <span class="icon icon-flag"></span>
+                                        </span>
+                                    </div>
+                                    <div class="media-middle media-body">
+                                        <h2 class="media-heading">
+                                            <span class="fw-l"><!-- Number of Issues-->
+                                            
+                                            </span>
+                                            <small>Issued</small>
+                                        </h2>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--TicketSample Resolved-->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-middle media-left">
+                                        <div class="media-chart">
+                                            <canvas data-chart="doughnut" data-animation="false" data-labels='["Resolved", "Unresolved"]' data-values='[{"backgroundColor": ["#e67e22", "#e5ebf1"], "data": [879, 377]}]' data-hide='["legend", "scalesX", "scalesY", "tooltips"]' height="64" width="64"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="media-middle media-body">
+                                        <h2 class="media-heading">
+                                            <span class="fw-l">
+                                                <!-- Number Resolved-->
+                                            </span>
+                                            <small>Resolved</small>
+                                        </h2>
+                                        <small>
+                                            <!-- Percentage of Resolved Tickets-->
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TicketSample -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-middle media-left">
+                                        <div class="media-chart">
+                                            <canvas data-chart="doughnut" data-animation="false" data-labels='["Resolved", "Unresolved"]' data-values='[{"backgroundColor": ["#e5ebf1", "#e67e22"], "data": [879, 377]}]' data-hide='["legend", "scalesX", "scalesY", "tooltips"]' height="64" width="64"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="media-middle media-body">
+                                        <h2 class="media-heading">
+                                            <span class="fw-l">
+                                                <!-- Number of unresolved-->
+                                            </span>
+                                            <small>Unresolved</small>
+                                        </h2>
+                                        <small>
+                                            <!-- Percentage of Unresolved-->
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xs-12">
                     <div class="panel">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <!--<table id="demo-dynamic-tables-2" class="table table-middle nowrap">-->
+                               
                                 <table id="myTable" class="table table-middle ">
                                     <thead>
                                         <tr>
@@ -92,7 +168,7 @@
 
        
         @section scripts{
-        <!--<script src="~/js/demo.min.js"></script>-->
+     
         <script src="~/Scripts/jquery.dataTables.min.js"></script>
         <script>
             $(document).ready(function () {
