@@ -147,9 +147,10 @@ namespace BugTracker
             //return View(ticket);
         }
         #endregion
-    
-    #region Tickets Edit
+
+        #region Tickets Edit
         // GET: Tickets/Edit/5
+        [Authorize(Roles = "Admin,PM,Developer,Submitter")]
         public ActionResult Edit(int? id)
         { 
             var roles = db.Roles.FirstOrDefault(r => r.Name == "Developer");
@@ -338,9 +339,10 @@ namespace BugTracker
         }
         #endregion
 
-      
+
 
         // GET: Tickets/Delete/5
+        [Authorize(Roles = "Admin,PM,Developer,Submitter")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

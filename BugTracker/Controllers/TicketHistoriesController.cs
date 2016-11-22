@@ -37,11 +37,11 @@ namespace BugTracker
         }
 
         // GET: TicketHistories/Create
-        public ActionResult Create()
-        {
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
+        //    return View();
+        //}
 
         // POST: TicketHistories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

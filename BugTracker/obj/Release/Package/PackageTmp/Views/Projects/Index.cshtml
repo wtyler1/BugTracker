@@ -1,0 +1,140 @@
+﻿@model IEnumerable<BugTracker.Models.Project>
+
+<head>
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/demo.min.css" rel="stylesheet" />
+</head>
+<body class="layout layout-header">
+    <div class="layout-header">
+        <div class="text-center m-b">
+    <h3 class="m-b-0">Projects</h3>
+    @if (User.IsInRole("Admin") | User.IsInRole("PM"))
+            {
+        <small>
+
+            @Html.ActionLink("Create Project", "Create")
+        </small>
+
+    }
+</div>
+
+        <div class="row gutter-xs">
+            <div class="col-xs-6">
+                <div class="card">
+                    <div class="card-values">
+                        <div class="p-x">
+                            <small>Projects</small>
+                            <h3 class="card-title fw-l">
+                                <!--Number of Projects-->
+                           </h3>
+                        </div>
+                    </div>
+                    <div class="card-chart">
+                        <canvas data-chart="line" data-animation="false" data-labels='["Jun 21", "Jun 20", "Jun 19", "Jun 18", "Jun 17", "Jun 16", "Jun 15"]' data-values='[{"backgroundColor": "rgba(97, 133, 168, 0.03)", "borderColor": "#6185a8", "data": [22808686, 21025319, 21963756, 13234568, 19898816, 15017935, 12671632]}]' data-scales='{"yAxes": [{ "ticks": {"max": 24519337}}]}' data-hide='["legend", "points", "scalesX", "scalesY", "tooltips"]' height="35"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="card">
+                    <div class="card-values">
+                        <div class="p-x">
+                            <small>Tickets</small>
+                            <h3 class="card-title fw-l">
+                                <!--Number of tickets-->
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-chart">
+                        <canvas data-chart="line" data-animation="false" data-labels='["Jun 21", "Jun 20", "Jun 19", "Jun 18", "Jun 17", "Jun 16", "Jun 15"]' data-values='[{"backgroundColor": "rgba(97, 133, 168, 0.03)", "borderColor": "#6185a8", "data": [206, 127, 155, 215, 162, 195, 196]}]' data-scales='{"yAxes": [{ "ticks": {"max": 231}}]}' data-hide='["legend", "points", "scalesX", "scalesY", "tooltips"]' height="35"></canvas>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+      
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+
+                            <table id="myTable" class="table table-middle ">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Project Name
+                                        </th>
+                                        <th>
+                                            Created On
+                                        </th>
+                                        <th>
+                                            Assigned To
+                                        </th>
+
+
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+            {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(Time => item.Created)
+                                            </td>
+                                            <td>
+
+                                                @foreach (var u in item.User)
+                                                {
+
+
+                                                    @Html.DisplayFor(user => u.FullName)
+                                                    <br />
+
+                                                }
+                                            </td>
+
+
+                                            <td>
+                                                @if (User.IsInRole("Admin"))
+                                                {
+                                                    @Html.ActionLink("Change Project Name ", "Edit", new { id = item.Id }, new { @class = "btn btn-default btn-sm" })
+                                                    @Html.ActionLink("Delete ", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" });
+                                                }
+
+                                                @if (User.IsInRole("Admin") | User.IsInRole("PM"))
+                                                {
+                                                    @Html.ActionLink("Assign Project ", "AssignUsers", "Projects", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+                        @section scripts{
+                           
+                            <script src="~/Scripts/jquery.dataTables.min.js"></script>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#myTable').DataTable();
+                                })
+
+                            </script>
+                        }
+</body>

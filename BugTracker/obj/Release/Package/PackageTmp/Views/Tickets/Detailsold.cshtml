@@ -1,0 +1,228 @@
+﻿@model BugTracker.Models.Ticket
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ticket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Assigned To:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssignedToUser.FullName)
+        </dd>
+
+        <dt>
+            Ticket Owner
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OwnerUser.FullName)
+        </dd>
+
+        <dt>
+            Project Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
+        <dt>
+           Ticket Priority
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketPriorities.Name)
+        </dd>
+
+        <dt>
+            Ticket Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketStatus.Name)
+        </dd>
+
+        <dt>
+           Ticket Type
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketType.Name)
+        </dd>
+
+        <dt>
+            Ticket Title
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Update)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Update)
+        </dd>
+
+    </dl>
+</div>
+
+<p>
+
+
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<h3>Comments </h3>
+
+<table>
+    @foreach (var usercomment in Model.TicketComments)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.User.FirstName )
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => usercomment.TicketId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = usercomment.Id }, null ) |
+                @Html.ActionLink("Details", "Details", "TicketComments", new { id = usercomment.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = usercomment.Id }, null)
+            </td>
+        </tr>
+
+    }
+</table>
+
+@using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="TicketId" value="@Model.Id" />
+                                <div>
+                                   
+
+
+                                    <div class="col-md-12">
+                                        <textarea placeholder="Message" name="Comment" id="message" class="form-full" required></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-lg btn-black" type="submit">Comment</button>
+                                    </div>
+                                </div>
+}
+
+<h3> TicketAttachments</h3>
+
+@foreach (var item in Model.TicketAttachments)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TicketId)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            <img src="@Url.Content(item.FileURL)" style="height:150px; width:150px;" />
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "TicketAttachments", new { id = item.Id }, null) |
+            @Html.ActionLink("Details", "Details", "TicketAttachments", new { id = item.Id }, null) |
+            @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = item.Id }, null)
+        </td>
+    </tr>
+}
+
+
+@using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="TicketId" value="@Model.Id" />
+    <div>
+
+
+
+        <div class="col-md-12">
+            <textarea placeholder="Description" name="Description" id="message" class="form-full" required></textarea>
+        </div>
+
+        <!--Input for Image-->
+        <div class="form-group">
+           <!-- Need Label-->
+             <h3>File Url</h3>
+            <div class="col-md-10">
+                <input type="file" name="Image" class="form-control" />
+               
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <button class="btn btn-lg btn-black" type="submit">Attach</button>
+        </div>
+    </div>
+}
+
+    <h2>History</h2>
+
+    @foreach (var tHistory in Model.TicketHistories)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => tHistory.User.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tHistory.TicketId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tHistory.Property)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tHistory.OldValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tHistory.NewValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tHistory.Changed)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = tHistory.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = tHistory.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = tHistory.Id })
+            </td>
+        </tr>
+    }
+

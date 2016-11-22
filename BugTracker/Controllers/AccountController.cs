@@ -32,7 +32,7 @@ namespace BugTracker.Controllers
                     result = await SignInManager.PasswordSignInAsync("frostalz@aol.com", "Password123!@#", false, false);
                     break;
                 case "Developer":
-                    result = await SignInManager.PasswordSignInAsync("ravens@aol.com", "Password123!@#", false, false);
+                    result = await SignInManager.PasswordSignInAsync("wtylerdeveloper@mailinator.com", "Password123!@#", false, false);
                     break;
                 case "PM":
                     result = await SignInManager.PasswordSignInAsync("Ashleyfrost@aol.com", "Password123!@#", false, false);
